@@ -1,3 +1,7 @@
+.Todos .TodoInput {
+  margin-bottom: 30px;
+}
+
 .TodoStats {
   padding: var(--padding-medium);
   border-bottom: 1px solid lightgrey;
@@ -6,15 +10,26 @@
 .TodoList {
   display: flex;
   flex-direction: column;
+  background: #ffffff;
+  border-radius: var(--border-radius);
 }
 
 .TodoItem {
-  padding: var(--padding-large) var(--padding-medium);
   width: 100%;
+  padding: var(--padding-large);
+  display: flex;
+  align-items: center;
+
 }
 
-.TodoItem:not(:first-of-type) {
+.TodoItem.Completed {
+  text-decoration: line-through;
+  color: lightgrey;
+}
+
+.TodoItem:not(:last-of-type) {
   margin-top: -1px;
+  border-bottom: 1px solid lightgrey;
 }
 
 .TodoItem:hover {
@@ -35,6 +50,11 @@
   font-size: 18px;
 }
 
-.TodoInput > *:first-child {
+.RoundedCheckbox {
   margin-right: 10px;
+}
+
+.TodoPlaceholder {
+  text-align: center;
+  font-size: 24px;
 }

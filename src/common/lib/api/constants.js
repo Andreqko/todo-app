@@ -3,3 +3,7 @@ export const LOADING_STATUS = {
   RESOLVED: 'resolved',
   REJECTED: 'rejected',
 };
+
+export const LOCAL_STORAGE_KEYS = {
+  TODOS: 'todos',
+};

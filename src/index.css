@@ -35,8 +35,6 @@ input, input:active, input:hover, input:focus {
   border: none;
   outline: none;
   box-shadow: none;
-  margin: 0;
-  padding: 0;
 }
 
 input[type="text"] {
@@ -53,9 +51,23 @@ input::-moz-placeholder {
   color: rgba(0, 0, 0, 0.4);
 }
 
-h1, h2 {
+button, button:hover, button:active {
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: inherit;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+h1, h2, p, input, ul, ol, button {
   padding: 0;
   margin: 0;
+}
+
+ul, ol {
+  list-style-type: none;
 }
 
 h1 {
