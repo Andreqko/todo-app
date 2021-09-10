@@ -1,0 +1,40 @@
+.TodoStats {
+  padding: var(--padding-medium);
+  border-bottom: 1px solid lightgrey;
+}
+
+.TodoList {
+  display: flex;
+  flex-direction: column;
+}
+
+.TodoItem {
+  padding: var(--padding-large) var(--padding-medium);
+  width: 100%;
+}
+
+.TodoItem:not(:first-of-type) {
+  margin-top: -1px;
+}
+
+.TodoItem:hover {
+  cursor: pointer;
+  box-shadow: 0 0 20px 5px rgba(0, 0, 0, .3);
+}
+
+.TodoInput {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 1px solid lightgrey;
+  border-radius: var(--border-radius);
+  padding: var(--padding-large);
+}
+
+.TodoInput input {
+  font-size: 18px;
+}
+
+.TodoInput > *:first-child {
+  margin-right: 10px;
+}
