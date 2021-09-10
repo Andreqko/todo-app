@@ -8,7 +8,8 @@
     "build": "react-scripts build",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@testing-library/jest-dom": "5.14.1",
