@@ -1,5 +1,5 @@
 import { todoReducer, todoActions } from './index';
-import { LOADING_STATUS } from '../../common/lib/api/constants';
+import { LOADING_STATUS } from '../../api/constants';
 
 const todoId = 1;
 const mockedTodo = {

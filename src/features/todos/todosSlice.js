@@ -1,13 +1,15 @@
-import { LOADING_STATUS } from '../../common/lib/api/constants';
+import { LOADING_STATUS } from '../../api/constants';
 import types from './types';
 import { getTodosFromLocalStorage, saveTodosInLocalStorage } from './utils';
+import generateRandomId from '../../common/lib/utils/generate-random-id';
 
 const initialState = {
   loadingStatus: LOADING_STATUS.IDLE,
   entities: getTodosFromLocalStorage(),
 };
 
-const nextTodoId = todos => todos.reduce((maxId, id) => Math.max(id, maxId), -1) + 1;
+const getNextOrderNumber = todos =>
+  todos.reduce((maxOrder, { order }) => Math.max(order, maxOrder), 0) + 1;
 
 export default function todosReducer(state = initialState, action) {
   const { entities } = state;
@@ -15,13 +17,17 @@ export default function todosReducer(state = initialState, action) {
   switch (action.type) {
     case types.addTodo: {
       const todo = action.payload;
-      const todoId = nextTodoId(Object.keys(entities));
+      const todoId = generateRandomId();
+      const todos = Object.values(entities);
+      const order = getNextOrderNumber(todos);
+
       const updatedEntities = {
         ...entities,
         [todoId]: {
           id: todoId,
           text: todo.text,
           completed: todo.completed ?? false,
+          order,
         },
       };
 
@@ -49,10 +55,10 @@ export default function todosReducer(state = initialState, action) {
     }
     case types.deleteTodo: {
       const todoId = action.payload;
-      const updatedEntities = { ...state.entities };
+      const updatedEntities = { ...entities };
 
       delete updatedEntities[todoId];
-      console.log('updatedEntities:', updatedEntities);
+
       saveTodosInLocalStorage(updatedEntities);
 
       return {
@@ -66,6 +72,22 @@ export default function todosReducer(state = initialState, action) {
 
         return acc;
       }, {});
+
+      saveTodosInLocalStorage(updatedEntities);
+
+      return {
+        ...state,
+        entities: updatedEntities,
+      };
+    }
+    case types.swapOrder: {
+      const { firstTodoId, secondTodoId } = action.payload;
+      const firstTodo = entities[firstTodoId];
+      const secondTodo = entities[secondTodoId];
+      const updatedEntities = { ...entities };
+
+      updatedEntities[firstTodo.id] = { ...firstTodo, order: secondTodo.order };
+      updatedEntities[secondTodo.id] = { ...secondTodo, order: firstTodo.order };
 
       saveTodosInLocalStorage(updatedEntities);
 

@@ -1,4 +1,4 @@
-import { LOCAL_STORAGE_KEYS } from '../../common/lib/api/constants';
+import { LOCAL_STORAGE_KEYS } from '../../api/constants';
 
 const localStorageExists = () => {
   try {

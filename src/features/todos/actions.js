@@ -20,6 +20,13 @@ const actions = {
     type: types.clearCompleted,
     payload: {},
   }),
+  swapOrder: (firstTodoId, secondTodoId) => ({
+    type: types.swapOrder,
+    payload: {
+      firstTodoId,
+      secondTodoId,
+    },
+  }),
 };
 
 export default actions;

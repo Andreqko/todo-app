@@ -1,25 +1,66 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import classNames from 'classnames';
 
 import classes from './todo-list.module.css';
 import TodoItem from './TodoItem/TodoItem';
 import { todoActions, todoSelectors } from '../../../features/todos';
 
 const TodoList = () => {
+  const [dragState, setDragState] = useState({ dragTodoId: null, dragOverTodoId: null });
+  const todos = useSelector(todoSelectors.selectSortedTodos);
   const dispatch = useDispatch();
-  const todos = useSelector(todoSelectors.selectTodoIds);
 
   const handleCheckTodo = useCallback(
-    todoId => e => dispatch(todoActions.toggleTodo(todoId)),
+    (e, todoId) => dispatch(todoActions.toggleTodo(todoId)),
     [dispatch]
   );
 
   const handleDeleteTodo = useCallback(
-    todoId => e => {
+    (e, todoId) => {
       e.stopPropagation();
       dispatch(todoActions.deleteTodo(todoId));
     },
     [dispatch]
+  );
+
+  const handleDragStart = useCallback((e, todoId) => {
+    setDragState(prevState => ({
+      ...prevState,
+      dragTodoId: todoId,
+    }));
+  }, []);
+
+  const handleDragOver = useCallback((e, todoId) => {
+    e.preventDefault();
+
+    setDragState(prevState => ({
+      ...prevState,
+      dragOverTodoId: todoId,
+    }));
+  }, []);
+
+  const handleDragLeave = useCallback(() => {
+    setDragState(prevState => ({
+      ...prevState,
+      dragOverTodoId: null,
+    }));
+  }, []);
+
+  const handleDrop = useCallback(
+    (e, dropTodoId) => {
+      const { dragTodoId } = dragState;
+      // we are dropping on the same item
+      if (dropTodoId !== dragTodoId) {
+        dispatch(todoActions.swapOrder(dragTodoId, dropTodoId));
+      }
+
+      setDragState({
+        dragTodoId: null,
+        dragOverTodoId: null,
+      });
+    },
+    [dispatch, dragState]
   );
 
   if (todos.length === 0) {
@@ -28,13 +69,19 @@ const TodoList = () => {
 
   return (
     <div className={classes.TodoList}>
-      {todos.map(todoId => (
+      {todos.map(({ id: todoId }) => (
         <TodoItem
-          id={todoId}
+          todoId={todoId}
           key={todoId}
-          className={classes.TodoItem}
-          onCheck={handleCheckTodo(todoId)}
-          onDelete={handleDeleteTodo(todoId)}
+          className={classNames(classes.TodoItem, {
+            [classes.DraggedOver]: dragState.dragOverTodoId === todoId,
+          })}
+          onCheck={handleCheckTodo}
+          onDelete={handleDeleteTodo}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
         />
       ))}
     </div>

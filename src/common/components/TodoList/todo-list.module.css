@@ -14,3 +14,11 @@
   margin-top: -1px;
   border-bottom: 1px solid lightgrey;
 }
+
+.TodoItem.Draggable {
+
+}
+
+.TodoItem.DraggedOver {
+  background: rgba(0, 0, 0, .1);
+}
