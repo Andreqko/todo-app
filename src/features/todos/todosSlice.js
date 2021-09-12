@@ -1,4 +1,4 @@
-import { LOADING_STATUS, LOCAL_STORAGE_KEYS } from '../../common/lib/api/constants';
+import { LOADING_STATUS } from '../../common/lib/api/constants';
 import types from './types';
 import { getTodosFromLocalStorage, saveTodosInLocalStorage } from './utils';
 
@@ -40,6 +40,19 @@ export default function todosReducer(state = initialState, action) {
         [todoId]: { ...todo, completed: !todo.completed },
       };
 
+      saveTodosInLocalStorage(updatedEntities);
+
+      return {
+        ...state,
+        entities: updatedEntities,
+      };
+    }
+    case types.deleteTodo: {
+      const todoId = action.payload;
+      const updatedEntities = { ...state.entities };
+
+      delete updatedEntities[todoId];
+      console.log('updatedEntities:', updatedEntities);
       saveTodosInLocalStorage(updatedEntities);
 
       return {

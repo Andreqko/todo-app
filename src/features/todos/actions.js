@@ -12,6 +12,10 @@ const actions = {
     type: types.toggleTodo,
     payload: todoId,
   }),
+  deleteTodo: todoId => ({
+    type: types.deleteTodo,
+    payload: todoId,
+  }),
   clearCompleted: () => ({
     type: types.clearCompleted,
     payload: {},

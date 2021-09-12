@@ -4,7 +4,11 @@
   padding: 20vh 20px;
 }
 
-.App > h1 {
+.App .Header {
+  margin-bottom: var(--margin-giant);
+}
+
+.App .AppTitle {
   font-size: 48px;
   color: white;
   letter-spacing: 10px;

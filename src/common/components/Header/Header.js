@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { todoActions } from '../../../../features/todos';
-import RoundedCheckbox from '../../RoundedCheckbox/RoundedCheckbox';
+import classNames from 'classnames';
 
-import classes from '../todos.module.css';
-import { KEY_MAP } from '../../../lib/html-helpers/keyboard';
+import classes from './header.module.css';
+import RoundedCheckbox from '../RoundedCheckbox/RoundedCheckbox';
+import { todoActions } from '../../../features/todos';
+import { KEY_MAP } from '../../lib/html-helpers/keyboard';
 
 const mockedTodo = { text: '', completed: false };
 
-const TodoInput = () => {
+const Header = ({ className }) => {
   const [todo, setTodo] = useState(mockedTodo);
   const inputRef = useRef();
   const dispatch = useDispatch();
@@ -35,7 +37,7 @@ const TodoInput = () => {
   };
 
   return (
-    <div className={classes.TodoInput}>
+    <div className={classNames(classes.Header, className)}>
       <RoundedCheckbox
         onChange={handleCompletedChange}
         checked={todo.completed}
@@ -53,4 +55,12 @@ const TodoInput = () => {
   );
 };
 
-export default TodoInput;
+Header.propTypes = {
+  className: PropTypes.string,
+};
+
+Header.defaultProps = {
+  className: '',
+};
+
+export default Header;

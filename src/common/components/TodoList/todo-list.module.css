@@ -1,0 +1,16 @@
+.TodoList {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.TodoPlaceholder {
+  text-align: center;
+  font-size: 24px;
+}
+
+.TodoItem {
+  margin-top: -1px;
+  border-bottom: 1px solid lightgrey;
+}

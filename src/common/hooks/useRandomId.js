@@ -1,5 +1,6 @@
 import { useRef } from 'react';
+import generateRandomId from '../lib/utils/generate-random-id';
 
-const useRandomId = () => useRef(Math.random().toString(36).substr(2, 9)).current;
+const useRandomId = () => useRef(generateRandomId()).current;
 
 export default useRandomId;

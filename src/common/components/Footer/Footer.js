@@ -2,17 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import classes from './footer.module.css';
-import { useDispatch } from 'react-redux';
-import { todoActions } from '../../../features/todos';
+import { useDispatch, useSelector } from 'react-redux';
+import { todoActions, todoSelectors } from '../../../features/todos';
 
 const Footer = props => {
   const dispatch = useDispatch();
-
+  const todos = useSelector(todoSelectors.selectTodoIds);
   const handleClearCompletedTodos = () => dispatch(todoActions.clearCompleted());
+
+  if (todos.length === 0) return null;
 
   return (
     <div className={classes.Footer}>
-      <div className={classes.RemainingTodos}>Items left</div>
+      <div>Items left</div>
       <ul className={classes.FiltersList}>
         <li className={classes.FiltersListItem}>
           <button className={classes.FilterButton}>All</button>
