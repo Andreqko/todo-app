@@ -82,6 +82,9 @@ export default function todosReducer(state = initialState, action) {
     }
     case types.swapOrder: {
       const { firstTodoId, secondTodoId } = action.payload;
+
+      if (!firstTodoId || !secondTodoId) return state;
+
       const firstTodo = entities[firstTodoId];
       const secondTodo = entities[secondTodoId];
       const updatedEntities = { ...entities };
