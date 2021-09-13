@@ -1,12 +1,14 @@
-import { todoReducer, todoActions } from './index';
+import todoReducer, { todoActions } from './index';
 import { LOADING_STATUS } from '../../api/constants';
 import generateRandomId from '../../common/lib/utils/generate-random-id';
+import { TODO_STATUSES } from '../../common/redux/constants';
+import { TODO_STATUSES_TOGGLING_MAP } from './utils';
 
 const mockedTodoId = generateRandomId();
 const mockedTodo = {
   id: mockedTodoId,
   text: 'Todo',
-  completed: false,
+  status: TODO_STATUSES.ACTIVE,
   order: 1,
 };
 const mockedEntities = { [mockedTodoId]: mockedTodo };
@@ -18,16 +20,18 @@ describe('Todo reducer', () => {
       loadingStatus: LOADING_STATUS.IDLE,
     });
   });
+
   test('Should add todo', () => {
     const text = mockedTodo.text;
-    const completed = mockedTodo.completed;
+    const status = mockedTodo.status;
 
-    const { entities } = todoReducer(undefined, todoActions.addTodo({ text, completed }));
+    const { entities } = todoReducer(undefined, todoActions.addTodo({ text, status }));
     const todo = Object.values(entities)[0];
 
     expect(todo.text).toEqual(text);
-    expect(todo.completed).toEqual(completed);
+    expect(todo.status).toEqual(status);
   });
+
   test('Should autoincrement order for newly added todo', () => {
     const { entities } = todoReducer(
       { entities: mockedEntities },
@@ -37,6 +41,7 @@ describe('Todo reducer', () => {
 
     expect(todo.order).toEqual(mockedTodo.order + 1);
   });
+
   test('Should delete todo', () => {
     const { entities } = todoReducer(
       { entities: mockedEntities },
@@ -46,6 +51,7 @@ describe('Todo reducer', () => {
 
     expect(entitiesCount).toEqual(0);
   });
+
   test('Should toggle todo', () => {
     const { entities } = todoReducer(
       { entities: mockedEntities },
@@ -53,17 +59,19 @@ describe('Todo reducer', () => {
     );
     const todo = Object.values(entities)[0];
 
-    expect(todo.completed).toEqual(!mockedTodo.completed);
+    expect(todo.status).toEqual(TODO_STATUSES_TOGGLING_MAP[mockedTodo.status]);
   });
+
   test('Should clear completed todos', () => {
     const { entities } = todoReducer(
-      { entities: { [mockedTodoId]: { ...mockedTodo, completed: true } } },
+      { entities: { [mockedTodoId]: { ...mockedTodo, status: TODO_STATUSES.COMPLETED } } },
       todoActions.clearCompleted(mockedTodoId)
     );
     const todo = Object.values(entities)[0];
 
-    expect(todo.completed).toEqual(false);
+    expect(todo.completed).toEqual(TODO_STATUSES.ACTIVE);
   });
+
   test('Should swap todos order', () => {
     const secondMockedTodoId = generateRandomId();
     const secondMockedTodo = {

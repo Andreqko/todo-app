@@ -1,15 +1,18 @@
 import { LOADING_STATUS } from '../../api/constants';
 import types from './types';
-import { getTodosFromLocalStorage, saveTodosInLocalStorage } from './utils';
+import {
+  getNextOrderNumber,
+  getTodosFromLocalStorage,
+  saveTodosInLocalStorage,
+  TODO_STATUSES_TOGGLING_MAP,
+} from './utils';
 import generateRandomId from '../../common/lib/utils/generate-random-id';
+import { TODO_STATUSES } from '../../common/redux/constants';
 
 const initialState = {
   loadingStatus: LOADING_STATUS.IDLE,
   entities: getTodosFromLocalStorage(),
 };
-
-const getNextOrderNumber = todos =>
-  todos.reduce((maxOrder, { order }) => Math.max(order, maxOrder), 0) + 1;
 
 export default function todosReducer(state = initialState, action) {
   const { entities } = state;
@@ -26,7 +29,7 @@ export default function todosReducer(state = initialState, action) {
         [todoId]: {
           id: todoId,
           text: todo.text,
-          completed: todo.completed ?? false,
+          status: todo.status ?? TODO_STATUSES.ACTIVE,
           order,
         },
       };
@@ -43,7 +46,7 @@ export default function todosReducer(state = initialState, action) {
       const todo = entities[todoId];
       const updatedEntities = {
         ...entities,
-        [todoId]: { ...todo, completed: !todo.completed },
+        [todoId]: { ...todo, status: TODO_STATUSES_TOGGLING_MAP[todo.status] },
       };
 
       saveTodosInLocalStorage(updatedEntities);
@@ -68,7 +71,7 @@ export default function todosReducer(state = initialState, action) {
     }
     case types.clearCompleted: {
       const updatedEntities = Object.entries(entities).reduce((acc, [id, todo]) => {
-        acc[id] = { ...todo, completed: false };
+        acc[id] = { ...todo, completed: TODO_STATUSES.ACTIVE };
 
         return acc;
       }, {});

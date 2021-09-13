@@ -10,6 +10,10 @@
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
+.FilterButton {
+  text-transform: capitalize;
+}
+
 .FilterButton:hover,
 .FilterButton:active {
   color: slategrey;

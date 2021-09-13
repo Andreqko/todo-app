@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-// stored as separated const, because can't use this.selectTodoEntities inside createSelector
+
 const selectTodoEntities = state => state.todos.entities;
 const selectTodos = createSelector(selectTodoEntities, entities => Object.values(entities));
 

@@ -50,7 +50,7 @@ const TodoList = () => {
   const handleDrop = useCallback(
     (e, dropTodoId) => {
       const { dragTodoId } = dragState;
-      // we are dropping on the same item
+      // we are dropping on the same item we are dragging
       if (dropTodoId !== dragTodoId) {
         dispatch(todoActions.swapOrder(dragTodoId, dropTodoId));
       }

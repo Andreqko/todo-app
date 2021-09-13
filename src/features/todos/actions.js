@@ -1,11 +1,11 @@
 import types from './types';
 
 const actions = {
-  addTodo: ({ text, completed }) => ({
+  addTodo: ({ text, status }) => ({
     type: types.addTodo,
     payload: {
       text,
-      completed,
+      status,
     },
   }),
   toggleTodo: todoId => ({

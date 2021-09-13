@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import classes from './todo-item.module.css';
 import RoundedCheckbox from '../../RoundedCheckbox/RoundedCheckbox';
 import { todoSelectors } from '../../../../features/todos';
+import { TODO_STATUSES } from '../../../redux/constants';
 
 const TodoItem = ({
   todoId,
@@ -21,11 +22,12 @@ const TodoItem = ({
 
   if (!todo) return null;
 
-  const { text, completed } = todo;
-
+  const { text, status } = todo;
+  const isCompleted = status === TODO_STATUSES.COMPLETED;
+  console.log('isCompleted:', isCompleted);
   return (
     <div
-      className={classNames(classes.TodoItem, className, { [classes.Completed]: completed })}
+      className={classNames(classes.TodoItem, className, { [classes.Completed]: isCompleted })}
       onClick={e => onCheck(e, todoId)}
       draggable={true}
       onDragStart={e => onDragStart(e, todoId)}
@@ -34,7 +36,7 @@ const TodoItem = ({
       onDrop={e => onDrop(e, todoId)}
     >
       <div className={classes.RightBlock}>
-        <RoundedCheckbox className={classes.RoundedCheckbox} checked={completed} disabled />
+        <RoundedCheckbox className={classes.RoundedCheckbox} checked={isCompleted} disabled />
         <span className={classes.TodoItemText}>{text}</span>
       </div>
       <button
