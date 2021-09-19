@@ -8,7 +8,7 @@ import { filtersActions, filtersSelectors } from '../../../features/filters';
 
 import classes from './footer.module.css';
 
-const Footer = props => {
+const Footer = () => {
   const currentStatusFilter = useSelector(filtersSelectors.selectStatusFilter);
   console.log('currentStatusFilter:', currentStatusFilter);
   const dispatch = useDispatch();
@@ -38,15 +38,11 @@ const Footer = props => {
           </li>
         ))}
       </ul>
-      <button class={classes.FilterButton} onClick={handleClearCompletedTodos}>
+      <button className={classes.FilterButton} onClick={handleClearCompletedTodos}>
         Clear completed
       </button>
     </div>
   );
 };
-
-Footer.propTypes = {};
-
-Footer.defaultProps = {};
 
 export default Footer;
