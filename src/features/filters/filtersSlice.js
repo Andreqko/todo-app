@@ -16,7 +16,7 @@ export default function filtersReducer(state = initialState, action) {
         ...state,
         status: action.payload,
       };
-      console.log('newFilters:', newFilters);
+
       saveFiltersInLocalStorage(newFilters);
 
       return {
