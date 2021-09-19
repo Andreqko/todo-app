@@ -71,7 +71,7 @@ export default function todosReducer(state = initialState, action) {
     }
     case types.clearCompleted: {
       const updatedEntities = Object.entries(entities).reduce((acc, [id, todo]) => {
-        acc[id] = { ...todo, completed: TODO_STATUSES.ACTIVE };
+        acc[id] = { ...todo, status: TODO_STATUSES.ACTIVE };
 
         return acc;
       }, {});

@@ -8,7 +8,7 @@ import { todoActions, todoSelectors } from '../../../features/todos';
 
 const TodoList = () => {
   const [dragState, setDragState] = useState({ dragTodoId: null, dragOverTodoId: null });
-  const todos = useSelector(todoSelectors.selectSortedTodos);
+  const todos = useSelector(todoSelectors.selectFilteredTodos);
   const dispatch = useDispatch();
 
   const handleCheckTodo = useCallback(

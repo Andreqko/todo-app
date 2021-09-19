@@ -69,7 +69,7 @@ describe('Todo reducer', () => {
     );
     const todo = Object.values(entities)[0];
 
-    expect(todo.completed).toEqual(TODO_STATUSES.ACTIVE);
+    expect(todo.status).toEqual(TODO_STATUSES.ACTIVE);
   });
 
   test('Should swap todos order', () => {

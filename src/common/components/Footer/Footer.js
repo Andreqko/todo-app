@@ -1,13 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import classNames from 'classnames';
 
-import classes from './footer.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { todoActions, todoSelectors } from '../../../features/todos';
 import { FILTER_STATUSES } from '../../redux/constants';
-import { filtersActions } from '../../../features/filters';
+import { filtersActions, filtersSelectors } from '../../../features/filters';
+
+import classes from './footer.module.css';
 
 const Footer = props => {
+  const currentStatusFilter = useSelector(filtersSelectors.selectStatusFilter);
+  console.log('currentStatusFilter:', currentStatusFilter);
   const dispatch = useDispatch();
   const todos = useSelector(todoSelectors.selectTodoIds);
   const handleClearCompletedTodos = () => dispatch(todoActions.clearCompleted());
@@ -20,7 +23,12 @@ const Footer = props => {
       <div>Items left</div>
       <ul className={classes.FiltersList}>
         {Object.values(FILTER_STATUSES).map(status => (
-          <li className={classes.FiltersListItem}>
+          <li
+            className={classNames(classes.FiltersListItem, {
+              [classes.Active]: status === currentStatusFilter,
+            })}
+            key={status}
+          >
             <button
               className={classes.FilterButton}
               onClick={() => handleStatusFilterChange(status)}
@@ -30,7 +38,7 @@ const Footer = props => {
           </li>
         ))}
       </ul>
-      <button className={classes.FilterButton} onClick={handleClearCompletedTodos}>
+      <button class={classes.FilterButton} onClick={handleClearCompletedTodos}>
         Clear completed
       </button>
     </div>

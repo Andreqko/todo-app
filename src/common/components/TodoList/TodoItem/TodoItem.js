@@ -24,7 +24,7 @@ const TodoItem = ({
 
   const { text, status } = todo;
   const isCompleted = status === TODO_STATUSES.COMPLETED;
-  console.log('isCompleted:', isCompleted);
+
   return (
     <div
       className={classNames(classes.TodoItem, className, { [classes.Completed]: isCompleted })}

@@ -7,11 +7,16 @@
   padding: var(--padding-large) var(--padding-medium);
   font-weight: 600;
   background: #ffffff;
+  border-top: 1px solid lightgrey;
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
 .FilterButton {
   text-transform: capitalize;
+}
+
+.Active .FilterButton {
+  color: deepskyblue;
 }
 
 .FilterButton:hover,

@@ -1,9 +1,9 @@
 import types from './types';
 
 const actions = {
-  setStatusFilter: newFilter => ({
+  setStatusFilter: newStatus => ({
     type: types.setStatusFilter,
-    payload: newFilter,
+    payload: newStatus,
   }),
 };
 
