@@ -1,6 +1,6 @@
 import todoReducer, { todoActions } from './index';
-import { LOADING_STATUS } from '../../api/constants';
 import generateRandomId from '../../common/lib/utils/generate-random-id';
+import { LOADING_STATUS } from '../../api/constants';
 import { TODO_STATUSES } from '../../common/redux/constants';
 import { TODO_STATUSES_TOGGLING_MAP } from './utils';
 
