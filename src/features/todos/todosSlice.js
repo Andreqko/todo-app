@@ -1,17 +1,13 @@
 import { LOADING_STATUS } from '../../api/constants';
 import types from './types';
-import {
-  getNextOrderNumber,
-  getTodosFromLocalStorage,
-  saveTodosInLocalStorage,
-  TODO_STATUSES_TOGGLING_MAP,
-} from './utils';
+import { getNextOrderNumber, saveTodosInLocalStorage, TODO_STATUSES_TOGGLING_MAP } from './utils';
 import generateRandomId from '../../common/lib/utils/generate-random-id';
 import { TODO_STATUSES } from '../../common/redux/constants';
+import { getLocalStorageItemByKey, LOCAL_STORAGE_KEYS } from '../../common/lib/utils/local-storage';
 
 const initialState = {
   loadingStatus: LOADING_STATUS.IDLE,
-  entities: getTodosFromLocalStorage(),
+  entities: getLocalStorageItemByKey(LOCAL_STORAGE_KEYS.TODOS),
 };
 
 export default function todosReducer(state = initialState, action) {

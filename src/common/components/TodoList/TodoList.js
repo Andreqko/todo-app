@@ -64,7 +64,7 @@ const TodoList = () => {
   );
 
   if (todos.length === 0) {
-    return <p className={classes.TodoPlaceholder}>You don't have any todos left...</p>;
+    return <p className={classes.TodoPlaceholder}>No todos found</p>;
   }
 
   return (
