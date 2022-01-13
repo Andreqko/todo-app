@@ -1,13 +1,12 @@
 import { LOADING_STATUS } from '../../api/constants';
 import types from './types';
-import { getNextOrderNumber, saveTodosInLocalStorage, TODO_STATUSES_TOGGLING_MAP } from './utils';
+import { getNextOrderNumber, TODO_STATUSES_TOGGLING_MAP } from './utils';
 import generateRandomId from '../../common/lib/utils/generate-random-id';
 import { TODO_STATUSES } from '../../common/redux/constants';
-import { getLocalStorageItemByKey, LOCAL_STORAGE_KEYS } from '../../common/lib/utils/local-storage';
 
 const initialState = {
   loadingStatus: LOADING_STATUS.IDLE,
-  entities: getLocalStorageItemByKey(LOCAL_STORAGE_KEYS.TODOS),
+  entities: {},
 };
 
 export default function todosReducer(state = initialState, action) {
@@ -30,11 +29,15 @@ export default function todosReducer(state = initialState, action) {
         },
       };
 
-      saveTodosInLocalStorage(updatedEntities);
-
       return {
         ...state,
         entities: updatedEntities,
+      };
+    }
+    case types.addTodos: {
+      return {
+        ...state,
+        entities: action.payload,
       };
     }
     case types.toggleTodo: {
@@ -44,8 +47,6 @@ export default function todosReducer(state = initialState, action) {
         ...entities,
         [todoId]: { ...todo, status: TODO_STATUSES_TOGGLING_MAP[todo.status] },
       };
-
-      saveTodosInLocalStorage(updatedEntities);
 
       return {
         ...state,
@@ -58,8 +59,6 @@ export default function todosReducer(state = initialState, action) {
 
       delete updatedEntities[todoId];
 
-      saveTodosInLocalStorage(updatedEntities);
-
       return {
         ...state,
         entities: updatedEntities,
@@ -71,8 +70,6 @@ export default function todosReducer(state = initialState, action) {
 
         return acc;
       }, {});
-
-      saveTodosInLocalStorage(updatedEntities);
 
       return {
         ...state,
@@ -90,8 +87,6 @@ export default function todosReducer(state = initialState, action) {
 
       updatedEntities[firstTodo.id] = { ...firstTodo, order: secondTodo.order };
       updatedEntities[secondTodo.id] = { ...secondTodo, order: firstTodo.order };
-
-      saveTodosInLocalStorage(updatedEntities);
 
       return {
         ...state,

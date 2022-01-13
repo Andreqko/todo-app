@@ -9,10 +9,10 @@ import { filtersActions, filtersSelectors } from '../../../features/filters';
 import classes from './footer.module.css';
 
 const Footer = () => {
-  const currentStatusFilter = useSelector(filtersSelectors.selectStatusFilter);
-  console.log('currentStatusFilter:', currentStatusFilter);
   const dispatch = useDispatch();
   const todos = useSelector(todoSelectors.selectTodoIds);
+  const currentStatusFilter = useSelector(filtersSelectors.selectStatusFilter);
+
   const handleClearCompletedTodos = () => dispatch(todoActions.clearCompleted());
   const handleStatusFilterChange = status => dispatch(filtersActions.setStatusFilter(status));
 

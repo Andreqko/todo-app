@@ -7,8 +7,8 @@ import Footer from '../common/components/Footer/Footer';
 
 const App = () => (
   <div className={classes.App}>
-    <h1 className={classes.AppTitle}>TODO</h1>
-    <Header className={classes.Header} />
+    <h1 className={classes.AppTitle}>Todo</h1>
+    <Header />
     <TodoList />
     <Footer />
   </div>

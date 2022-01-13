@@ -1,13 +1,22 @@
 import types from './types';
 
 const actions = {
-  addTodo: ({ text, status }) => ({
-    type: types.addTodo,
-    payload: {
-      text,
-      status,
-    },
-  }),
+  addTodo: todoData => async dispatch => {
+    const todo = await fetch('http://localhost:3001/api/todos/todo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(todoData),
+    });
+
+    dispatch({ type: types.addTodo, payload: todo });
+  },
+  getTodos: todos => async dispatch => {
+    const todos = await fetch('http://localhost:3001/api/todos');
+
+    dispatch({ type: types.addTodos, payload: todos });
+  },
   toggleTodo: todoId => ({
     type: types.toggleTodo,
     payload: todoId,
